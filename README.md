@@ -14,4 +14,4 @@ I understand. I wonder if there might be a more efficient approach for the Unico
 
 Either way, the return value is the Levenshtein distance as `u32`. It may be worth
 noting that input strings of length greater than `u32::MAX` will not yield correct
-results—though I can't imagine how that problem would arise in practice.
+results—though I can hardly imagine that problem arising in practice.
