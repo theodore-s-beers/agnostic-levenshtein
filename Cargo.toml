@@ -6,5 +6,5 @@ authors = ["Theo Beers <theo.beers@drexel.edu>"]
 description = "Levenshtein distance for ASCII or Unicode strings"
 license = "MIT"
 repository = "https://github.com/theodore-s-beers/agnostic-levenshtein"
-keywords = ["edit distance", "Levenshtein distance"]
+keywords = ["edit-distance", "levenshtein"]
 categories = ["algorithms", "internationalization", "text-processing"]
