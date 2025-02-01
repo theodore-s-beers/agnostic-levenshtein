@@ -1,4 +1,4 @@
-# edit-distance
+# agnostic-levenshtein
 
 After doing the [LeetCode problem](https://leetcode.com/problems/edit-distance/) on the
 edit distance between two strings—which in this case refers to the

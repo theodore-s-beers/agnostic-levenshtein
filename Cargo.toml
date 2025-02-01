@@ -1,10 +1,10 @@
 [package]
-name = "edit_distance"
+name = "agnostic-levenshtein"
 version = "0.1.0"
 edition = "2024"
 authors = ["Theo Beers <theo.beers@drexel.edu>"]
-description = "Simple Rust implementation of Levenshtein distance"
+description = "Levenshtein distance for ASCII or Unicode strings"
 license = "MIT"
-repository = "https://github.com/theodore-s-beers/edit-distance"
+repository = "https://github.com/theodore-s-beers/agnostic-levenshtein"
 keywords = ["edit distance", "Levenshtein distance"]
 categories = ["algorithms", "internationalization", "text-processing"]

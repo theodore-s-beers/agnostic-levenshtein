@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "edit_distance"
+name = "agnostic-levenshtein"
 version = "0.1.0"
