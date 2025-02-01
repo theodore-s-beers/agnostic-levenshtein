@@ -11,7 +11,7 @@
 #![forbid(unsafe_code)]
 #![deny(missing_docs)]
 #![warn(clippy::pedantic, clippy::nursery, clippy::cargo)]
-#![allow(clippy::cast_possible_truncation, clippy::needless_range_loop)]
+#![allow(clippy::cast_possible_truncation)]
 
 /// Returns the Levenshtein distance (`u32`) between two strings (`&str`), `a` and `b`.
 /// The `ascii` flag indicates whether the strings can be treated as ASCII-only.
