@@ -17,7 +17,9 @@
 /// The `ascii` flag indicates whether the strings can be treated as ASCII-only.
 #[must_use]
 pub fn edit_distance(a: &str, b: &str, ascii: bool) -> u32 {
-    if ascii {
+    if a == b {
+        0
+    } else if ascii {
         min_distance(a.as_bytes(), b.as_bytes())
     } else {
         let a_chars: Vec<char> = a.chars().collect();
@@ -27,16 +29,13 @@ pub fn edit_distance(a: &str, b: &str, ascii: bool) -> u32 {
 }
 
 fn min_distance<T: PartialEq>(a: &[T], b: &[T]) -> u32 {
-    if a == b {
-        return 0;
-    }
-
     let m = a.len();
+    let n = b.len();
 
-    if a.is_empty() {
-        return b.len() as u32;
+    if m == 0 {
+        return n as u32;
     }
-    if b.is_empty() {
+    if n == 0 {
         return m as u32;
     }
 
