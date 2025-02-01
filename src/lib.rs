@@ -1,6 +1,20 @@
-#![warn(clippy::pedantic, clippy::nursery)]
+//! This library provides a common algorithm for calculating the Levenshtein distance
+//! between two strings, i.e., the minimum number of single-character edits (insertions,
+//! deletions, or substitutions) required to change one string into the other. There is
+//! a single public function, `edit_distance`, which takes two string references
+//! (`&str`) and a `bool` flag indicating whether the strings can be treated as
+//! ASCII-only. If the flag is set to false—the safer option—the strings will operated
+//! on as sequences of `char`s, i.e., 32-bit Unicode scalar values. This does involve
+//! more allocation and probably a longer running time than the ASCII case. The return
+//! value of `edit_distance`, in any event, is the Levenshtein distance as `u32`.
+
+#![forbid(unsafe_code)]
+#![deny(missing_docs)]
+#![warn(clippy::pedantic, clippy::nursery, clippy::cargo)]
 #![allow(clippy::cast_possible_truncation, clippy::needless_range_loop)]
 
+/// Returns the Levenshtein distance (`u32`) between two strings (`&str`), `a` and `b`.
+/// The `ascii` flag indicates whether the strings can be treated as ASCII-only.
 #[must_use]
 pub fn edit_distance(a: &str, b: &str, ascii: bool) -> u32 {
     if ascii {

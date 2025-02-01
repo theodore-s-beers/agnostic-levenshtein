@@ -2,5 +2,8 @@
 name = "edit_distance"
 version = "0.1.0"
 edition = "2024"
-
-[dependencies]
+description = "Simple Rust implementation of Levenshtein distance"
+license = "MIT"
+repository = "https://github.com/theodore-s-beers/edit-distance"
+keywords = ["edit distance", "Levenshtein distance"]
+categories = ["algorithms", "internationalization", "text-processing"]
