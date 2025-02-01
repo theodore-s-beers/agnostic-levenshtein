@@ -58,7 +58,6 @@ fn min_distance<T: PartialEq>(a: &[T], b: &[T]) -> u32 {
         }
     }
 
-    // Return final value from dp array
     dp[m - 1]
 }
 
