@@ -27,43 +27,40 @@ pub fn edit_distance(a: &str, b: &str, ascii: bool) -> u32 {
 }
 
 fn min_distance<T: PartialEq>(a: &[T], b: &[T]) -> u32 {
+    if a == b {
+        return 0;
+    }
+
+    let m = a.len();
+
     if a.is_empty() {
         return b.len() as u32;
     }
     if b.is_empty() {
-        return a.len() as u32;
+        return m as u32;
     }
 
-    let m = a.len();
-    let n = b.len();
+    let mut dp: Vec<u32> = (1..).take(m).collect();
 
-    let mut dp: Vec<Vec<u32>> = vec![vec![0; n + 1]; m + 1];
+    for (row, char_b) in b.iter().enumerate() {
+        let mut left = row as u32;
+        let mut diag = row as u32;
 
-    // Initialize first row and column
-    for i in 1..=m {
-        dp[i][0] = i as u32;
-    }
-    for j in 1..=n {
-        dp[0][j] = j as u32;
-    }
+        for (col, char_a) in a.iter().enumerate() {
+            let insert = left + 1;
+            let delete = dp[col] + 1;
+            let subst = if char_a == char_b { diag } else { diag + 1 };
 
-    for i in 1..=m {
-        for j in 1..=n {
-            if a[i - 1] == b[j - 1] {
-                dp[i][j] = dp[i - 1][j - 1]; // Match; no increase
-            } else {
-                let insert = dp[i][j - 1];
-                let delete = dp[i - 1][j];
-                let replace = dp[i - 1][j - 1];
+            let min_cost = insert.min(delete).min(subst);
 
-                // Update based on cheapest operation
-                dp[i][j] = 1 + insert.min(delete).min(replace);
-            }
+            diag = dp[col]; // Save for next iteration of inner loop
+            left = min_cost;
+            dp[col] = min_cost;
         }
     }
 
-    // Return value from bottom right cell
-    dp[m][n]
+    // Return final value from dp array
+    dp[m - 1]
 }
 
 #[cfg(test)]
