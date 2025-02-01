@@ -102,4 +102,25 @@ mod tests {
         let b = "شهنامه";
         assert_eq!(edit_distance(a, b, true), 2);
     }
+
+    #[test]
+    fn empty_ascii() {
+        let a = "levenshtein";
+        let b = "";
+        assert_eq!(edit_distance(a, b, true), 11);
+    }
+
+    #[test]
+    fn empty_unicode() {
+        let a = "maḥmūd";
+        let b = "";
+        assert_eq!(edit_distance(a, b, false), 6);
+    }
+
+    #[test]
+    fn equal_regardless() {
+        let a = "Ghiyāth al-Dīn";
+        let b = "Ghiyāth al-Dīn";
+        assert_eq!(edit_distance(a, b, true), 0);
+    }
 }
