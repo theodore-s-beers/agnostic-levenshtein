@@ -17,9 +17,26 @@
 /// The `ascii` flag indicates whether the strings can be treated as ASCII-only.
 #[must_use]
 pub fn edit_distance(a: &str, b: &str, ascii: bool) -> u32 {
+    // Handle edge cases as early as possible
     if a == b {
-        0
-    } else if ascii {
+        return 0;
+    }
+
+    if a.is_empty() {
+        if ascii {
+            return b.len() as u32;
+        }
+        return b.chars().count() as u32;
+    }
+
+    if b.is_empty() {
+        if ascii {
+            return a.len() as u32;
+        }
+        return a.chars().count() as u32;
+    }
+
+    if ascii {
         min_distance(a.as_bytes(), b.as_bytes())
     } else {
         let a_chars: Vec<char> = a.chars().collect();
@@ -29,16 +46,8 @@ pub fn edit_distance(a: &str, b: &str, ascii: bool) -> u32 {
 }
 
 fn min_distance<T: PartialEq>(a: &[T], b: &[T]) -> u32 {
+    // We already know: strings are not equal; neither string is empty
     let m = a.len();
-    let n = b.len();
-
-    if m == 0 {
-        return n as u32;
-    }
-    if n == 0 {
-        return m as u32;
-    }
-
     let mut dp: Vec<u32> = (1..).take(m).collect();
 
     for (row, char_b) in b.iter().enumerate() {
