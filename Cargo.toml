@@ -1,6 +1,6 @@
 [package]
 name = "agnostic-levenshtein"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2024"
 authors = ["Theo Beers <theo.beers@drexel.edu>"]
 description = "Levenshtein distance for ASCII or Unicode strings"
