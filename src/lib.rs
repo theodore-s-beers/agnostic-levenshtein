@@ -13,6 +13,8 @@
 #![warn(clippy::pedantic, clippy::nursery, clippy::cargo)]
 #![allow(clippy::cast_possible_truncation)]
 
+use std::mem::swap;
+
 /// Returns the Levenshtein distance (`u32`) between two strings (`&str`), `a` and `b`.
 /// The `ascii` flag indicates whether the strings can be treated as ASCII-only.
 #[must_use]
@@ -48,26 +50,34 @@ pub fn edit_distance(a: &str, b: &str, ascii: bool) -> u32 {
 fn min_distance<T: PartialEq>(a: &[T], b: &[T]) -> u32 {
     // We already know: strings are not equal; neither string is empty
     let m = a.len();
-    let mut dp: Vec<u32> = (1..).take(m).collect();
 
-    for (row, char_b) in b.iter().enumerate() {
-        let mut left = row as u32;
-        let mut diag = row as u32;
+    // "Previous row" is initialized with the base case:
+    // the distance from an empty string to each prefix of `a`.
+    let mut dp_prev: Vec<u32> = (0..=m as u32).collect();
+    let mut dp_curr: Vec<u32> = vec![0; m + 1];
 
-        for (col, char_a) in a.iter().enumerate() {
-            let insert = left + 1;
-            let delete = dp[col] + 1;
-            let subst = if char_a == char_b { diag } else { diag + 1 };
+    for (i, b_char) in b.iter().enumerate() {
+        // i.e., cost of deleting all chars from `b` up to this point
+        dp_curr[0] = i as u32 + 1;
 
-            let min_cost = insert.min(delete).min(subst);
+        for j in 1..=m {
+            if a[j - 1] == *b_char {
+                dp_curr[j] = dp_prev[j - 1];
+                continue;
+            }
 
-            diag = dp[col]; // Save for next iteration of inner loop
-            left = min_cost;
-            dp[col] = min_cost;
+            let insert = dp_curr[j - 1] + 1;
+            let delete = dp_prev[j] + 1;
+            let substitute = dp_prev[j - 1] + 1;
+
+            dp_curr[j] = insert.min(delete).min(substitute);
         }
+
+        // `curr` becomes `prev` for next iteration
+        swap(&mut dp_prev, &mut dp_curr);
     }
 
-    dp[m - 1]
+    dp_prev[m]
 }
 
 #[cfg(test)]
